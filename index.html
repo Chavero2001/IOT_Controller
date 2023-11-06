@@ -5,6 +5,34 @@
 <body>
   <hi>Web application</hi>
   <p>This is a web application </p>
+
+  <div>
+    <label>Topic:
+    <input type="text" id="topic" placeholder="enter a topic"/> </label>
+    <button onclick="getData()">Get the data </button>
+    
+  </div>
+  
+  
+  <div id="result"></div>
+
+  <script>
+    function getData(){
+      user_topic = document.getElementById('topic').value;
+      url = '/historian?topic=${user_topic}'
+    
+      fetch(url)
+        .then(response => response.json())
+        .then(data => displayData(data));
+    }
+    
+    function displayData(data){
+      resultDiv=document.getElementById("result");
+      resultDiv.innerHTML = 'T' + data;  
+    }
+    
+
+  </script>  
   
 </body>
   
