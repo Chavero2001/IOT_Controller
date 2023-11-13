@@ -3,6 +3,11 @@ import sqlite3
 
 app = Flask(__name__)
 DB_FILE = "../historian_data.db"
+CONFIG_FILE = "../config.jsaon"
+
+#load jsonfile
+with open(CONFIG_FILE, 'r') as config_file:
+   config_data = json.load(confige_file)
 
 @app.route('/',methods=['GET'])
 #Web page
