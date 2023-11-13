@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>System Configuration</title> 
+</head>
+<body>
+  <hi>Configrue System</hi>
+  <p>Add a configuration</p>
+
+  <div>
+    <label>Topic:
+    <input type="text" id="topic" placeholder="enter a topic"/> </label> <!-- Comment in HTML-->
+    <button onclick="getData()">Get the data </button>
+    
+  </div>
+  
+  
+  <div id="result"></div>
+
+  <script>
+    function getData(){
+      user_topic = document.getElementById('topic').value;
+      user_topic = encodeURIComponent (user_topic);
+      url = `/historian?topic=${user_topic}` //backsticks to get substitution
+    
+      fetch(url)
+        .then(response => response.json())
+        .then(data => displayData(data));
+    }
+    
+    function displayData(data){
+      resultDiv=document.getElementById("result");
+      resultDiv.innerHTML = 'T' + data;  
+    }
+    
+
+  </script>  
+  
+</body>
+  
+
+</html>
