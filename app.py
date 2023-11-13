@@ -10,10 +10,10 @@ def main():
   return render_template ('index.html')
 
 #Serving up stuff 
-@app.route('/example',methogds=['GET'])
-def example():
-  return 'example'
-
+@app.route('/configure',methogds=['GET'])
+def configure():
+  return render_template('configure HMTL')
+  
 #Return some data using JSOn format
 @app.route('/service',methods=['GET'])
 def ser():
