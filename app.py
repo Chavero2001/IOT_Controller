@@ -1,9 +1,52 @@
 from flask import Flask, render_template, jsonify, request
 import sqlite3
+from flask import LoginManager, UserMixin, login_user, login_required, logout_user, url_for
+
 
 app = Flask(__name__)
 DB_FILE = "../historian_data.db"
 CONFIG_FILE = "../config.jsaon"
+
+app.secret_key='your_secret_key' #Change this to any string
+login_manager = LoginManager()
+login_manager.login_view = "login"
+login_manager.init_app(app) #bind to the application
+
+#hardcore
+users = {
+   "admin":"12345"
+}
+
+#Create the user mixin to work with our application
+class User(UserMixin):
+   def __init__(self, username):
+      self.id = username
+
+@login_manager.user_loader
+def load_user(user_id):
+   return User(user_id)
+
+
+@app.route('/logout')
+def logout():
+   logout_user()
+   return redirect(url_for('index'))
+
+@app.route('/login',methods=['GET','POST'])
+def login():
+   if request.method=='POST': #form to submit 
+      username = request.form.get('username') #POST data
+      formPassword = request.form.get('password')
+      #handle the "next" parameter which gets the user back to the correct page
+      next = request.args.get('next')
+      DBPassword = user.get(username)
+      if DBPassword == formPassword: 
+         user = User(username)
+         login_user(user)
+         return redirect(next) #Redirect to the user to the resource they were requesting
+   return render_template('login.html')
+         
+  
 
 #load jsonfile
 with open(CONFIG_FILE, 'r') as config_file:
